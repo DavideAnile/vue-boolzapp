@@ -23,29 +23,95 @@
     <div id="app">
     
         
-            <div class="contacts-area">
-                <div class="user-container">
-                    <div id="left-user-container">
+            <div class="contacts">
+                <div class="profile-container">
+
+                    <div id="left-profile-container">
                         <img src="img/avatar_io.jpg" alt="">
                         <span>Sofia</span>
                     </div>
-                    <div id="right-user-container">
+
+                    <div id="right-profile-container">
                         <i class="fa-solid fa-rotate-right"></i>
                         <i class="fa-solid fa-message"></i>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </div>
-                </div>
-            </div>
-            <div class="chat-area">
-                <div id="up-chat-area">
 
                 </div>
-                <div id="bottom-chat-area">
+
+                <div class="desktop-notifications">
+
+                    <div id="desktop-notifications-bell">
+                        <i class="fa-solid fa-bell-slash"></i>
+                    </div>
+
+                    <div id="desktop-notifications-text">
+                        <span style="font-weight: bold;">Ricevi notifiche di nuovi messaggi</span>
+                        <a href="">Attiva notifiche desktop</a>
+                    </div>
+
+                </div>
+
+                <div class="search-user-input">
+                    <div id="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <input type="text" placeholder="Cerca o inizia una nuova chat">
+                </div>
+
+                <div id="users">
+                    <div v-for="(elemento, indice) in contacts" class="user-container" :class="activeChat == indice ? 'active' : '' " @click="showActiveChat(indice)" >
+                        <div class="left-user">
+    
+                            <div id="user-img">
+                                <img :src="elemento.avatar" alt="">
+                            </div>
+                            <div id="user-info">
+                                <span>{{elemento.name}}</span>
+                                <span style="font-size: 8px; opacity: .5;">{{elemento.messages[0].message}}</span>
+                            </div>
+                        </div>
+                        <div class="right-user">
+                            <span style="font-size: 8px; opacity: .5;">12:00</span>
+                        </div>
+    
+                    </div>
+
+                </div>
+                
+                
+
+            </div>
+
+            <div class="chat">
+                <div class="up-chat">
+                    <div class="right-up-chat">
+                        <div id="active-user-img">
+                            <img :src="contacts[activeChat].avatar" alt="">
+                        </div>
+                        <div id="active-user-info">
+                            <span>{{contacts[activeChat].name}}</span>
+                            <span style="font-size: 8px; opacity: .5;">Ultimo accesso oggi alle 12:00</span>
+                        </div>
+                    </div>
+                    <div class="left-up-chat">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-paperclip"></i>
+                        <i class="fa-solid fa-ellipsis-vertical"></i> 
+                    </div>
+
+                </div>
+                <div class="chat-area">
+                    <div v-for="(elemento,indice,) in contacts[activeChat].messages" :class="elemento.status == 'sent' ? 'sent' : 'received' " id="message-text"> 
+
+                        {{elemento.message}}
+                        <div id="message-time">12:00</div>
+                    </div>
+                </div>
+                <div class="bottom-chat">
                     <div>
                         <i class="fa-regular fa-face-smile"></i>
                     </div>
                     
-                        <input type="text" placeholder="Invia un messaggio">
+                        <input type="text" placeholder="Invia un messaggio" v-model="newMessage.message" @keyup.enter="createMessage(activeChat), automaticMessage(activeChat)">
                     
                     <div>
                         <i class="fa-solid fa-microphone"></i>

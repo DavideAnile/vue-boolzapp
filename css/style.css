@@ -31,27 +31,31 @@ main{
     width: 80%;
     height: 90%;
     background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
     
 }
 
 
-#app .contacts-area{
+#app .contacts{
+    display: flex;
+    flex-direction: column;
     width: 30%;
     height: 100%;
-    background-color: bisque;
+    
 }
 
-#app .contacts-area .user-container{
+#app .contacts .profile-container{
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     height: 35px;
     background-color:  #f3eeea;
-    border: 1px solid black;
+    border-right: 1px solid rgba(211, 211, 211, 0.4);
 }
 
-#app .contacts-area .user-container #left-user-container{
+#app .contacts .profile-container #left-profile-container{
     display: flex;
     align-items: center;
     gap: 5px;
@@ -61,20 +65,128 @@ main{
     
 } 
 
-#app .contacts-area .user-container #left-user-container img{
+#app .contacts .profile-container #left-profile-container img{
     height: 100%;
     border-radius: 50%;
 }
 
-#app .contacts-area .user-container #right-user-container{
+#app .contacts .profile-container #right-profile-container{
     display: flex;
     gap: 5px;
     padding: 10px;
-    font-size: 12px;
+    font-size: 10px;
+    color: rgba(128, 128, 128, 0.6);
+}
+
+#app .contacts .desktop-notifications{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 40px;
+    padding: 0 5px;
+    background-color: #8edafc;
+}
+
+#app .contacts .desktop-notifications #desktop-notifications-bell{
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    color: #8edafc;
+}
+
+#app .contacts .desktop-notifications #desktop-notifications-text{
+    display: flex;
+    flex-direction: column;
+    font-size: 8px;
+    
+}
+
+#app .contacts .search-user-input{
+    display: flex;
+    width: 100%;
+    height: 20px;
+    padding: 2px;
+    
+    background-color: white;
+}
+
+#app .contacts .search-user-input #search-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    border: 1px solid rgba(211, 211, 211, 0.4);
+    border-right: none;
+}
+
+#app .contacts .search-user-input #search-icon i{
+    font-size: 8px;
     color: gray;
 }
 
-#app .chat-area{
+#app .contacts .search-user-input input{
+    flex-grow: 1;
+    outline: none;
+    border: 1px solid rgba(211, 211, 211, 0.4);
+    font-size: 8px;
+    padding: 0 2px;
+}
+
+
+#app .contacts .user-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid rgba(211, 211, 211, 0.4);
+}
+    
+#app .contacts .user-container:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.active{
+    background-color: lightgray;
+}
+    
+
+#app .contacts  #users{
+    flex-grow: 1;
+    overflow: auto;
+}
+
+#app .contacts .user-container .left-user{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#app .contacts .user-container .left-user #user-img{
+    margin-left: 5px;
+    height: 80%;
+}
+
+#app .contacts .user-container .left-user #user-img img{
+    
+    height: 100%;
+    border-radius: 50%;
+}
+
+#app .contacts .user-container .left-user #user-info{
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+}
+
+#app .contacts .user-container .right-user{
+    font-size: 10px;
+    padding-top: 5px;
+    margin-right: 5px;
+}
+
+#app .chat{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -83,14 +195,103 @@ main{
     background-color: lightpink;
 }
 
-
-#app .chat-area #up-chat-area{
-    width: 100%;
+#app .chat .up-chat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 35px;
-    background-color: #f3eeea;
+    background-color: #f3eeea
 }
 
-#app .chat-area #bottom-chat-area{
+
+#app .chat .up-chat .right-up-chat{
+    display: flex;
+    gap: 10px;
+    height: 100%;
+    background-color: #f3eeea;
+    
+}
+
+#app .chat .up-chat .right-up-chat #active-user-img{
+    height: 100%;
+    padding: 5px 5px;
+}
+
+#app .chat .up-chat .right-up-chat #active-user-img img{
+    height: 100%;
+    border-radius: 50%;
+}
+
+#app .chat .up-chat .right-up-chat #active-user-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 10px;
+}
+
+
+#app .chat .up-chat .left-up-chat{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 100%;
+    font-size: 10px;
+    padding: 10px;
+    color: rgba(128, 128, 128, 0.6);
+    
+}
+
+#app .chat .chat-area{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-grow: 1;
+    padding: 10px 0;
+    overflow: auto;
+    background-image: url("/img/mine.jpg")
+    
+}
+
+#app .chat .chat-area #message-text{
+    display: flex;
+    position: relative;
+    width: 200px;
+    padding: 10px 7px 15px 7px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    margin: 0 40px;
+    color: rgba(0, 0, 0, 0.8);
+   
+}
+
+
+#app .chat .chat-area div#message-time{
+   
+   position: absolute;
+   bottom: 0;
+   right: 5px;
+   font-size: .8em;
+   color: gray;
+   padding: 2px;
+   
+    
+    
+}
+
+ .received{
+    background-color: white;
+    align-self: flex-start;
+    font-size: 10px;
+}
+
+.sent{
+    background-color: #d5f9ba;
+    align-self: flex-end;
+    font-size: 10px;
+}
+
+#app .chat .bottom-chat{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -102,7 +303,7 @@ main{
     color: gray;
     background-color: #f3eeea;
 }
-#app .chat-area #bottom-chat-area input{
+#app .chat .bottom-chat input{
     flex-grow: 1;
     padding: 5px 6px;
     font-size: 10px;
