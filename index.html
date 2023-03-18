@@ -54,11 +54,12 @@
 
                 <div class="search-user-input">
                     <div id="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-                    <input type="text" placeholder="Cerca o inizia una nuova chat">
+                    <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchValue">
                 </div>
 
-                <div id="users">
-                    <div v-for="(elemento, indice) in contacts" class="user-container" :class="activeChat == indice ? 'active' : '' " @click="showActiveChat(indice)" >
+                <div v-if="usersList[activeChat] == undefined" id="search-user-error"> Non esistono conversazioni o chat </div>
+                <div id="users" v-else>
+                    <div v-for="(elemento, indice) in usersList" class="user-container" :class="activeChat == indice ? 'active' : '' " @click="showActiveChat(indice)" >
                         <div class="left-user">
     
                             <div id="user-img">
@@ -66,11 +67,11 @@
                             </div>
                             <div id="user-info">
                                 <span>{{elemento.name}}</span>
-                                <span style="font-size: 8px; opacity: .5;">{{elemento.messages[0].message}}</span>
+                                <span style="font-size: 8px; opacity: .5;">{{elemento.messages[elemento.messages.length - 1].message}}</span>
                             </div>
                         </div>
                         <div class="right-user">
-                            <span style="font-size: 8px; opacity: .5;">12:00</span>
+                            <span style="font-size: 6px; opacity: .5;" id="chat-date">{{elemento.messages[elemento.messages.length - 1].date}}</span>
                         </div>
     
                     </div>
@@ -85,10 +86,11 @@
                 <div class="up-chat">
                     <div class="right-up-chat">
                         <div id="active-user-img">
-                            <img :src="contacts[activeChat].avatar" alt="">
+                            <img :src=" usersList[activeChat] == undefined ? '' : usersList[activeChat].avatar " alt="">
                         </div>
-                        <div id="active-user-info">
-                            <span>{{contacts[activeChat].name}}</span>
+                        <span v-if="usersList[activeChat] == undefined "> </span>
+                        <div id="active-user-info" v-else>
+                            <span>{{usersList[activeChat].name}}</span>
                             <span style="font-size: 8px; opacity: .5;">Ultimo accesso oggi alle 12:00</span>
                         </div>
                     </div>
@@ -100,10 +102,14 @@
 
                 </div>
                 <div class="chat-area">
-                    <div v-for="(elemento,indice,) in contacts[activeChat].messages" :class="elemento.status == 'sent' ? 'sent' : 'received' " id="message-text"> 
+                    <div v-if="usersList[activeChat] == undefined ">
+                        
+                    </div>
+
+                    <div v-else v-for="(elemento,indice,) in usersList[activeChat].messages" :class="elemento.status == 'sent' ? 'sent' : 'received' " id="message-text"> 
 
                         {{elemento.message}}
-                        <div id="message-time">12:00</div>
+                        <div id="message-time">{{elemento.date}}</div>
                     </div>
                 </div>
                 <div class="bottom-chat">
@@ -111,7 +117,7 @@
                         <i class="fa-regular fa-face-smile"></i>
                     </div>
                     
-                        <input type="text" placeholder="Invia un messaggio" v-model="newMessage.message" @keyup.enter="createMessage(activeChat), automaticMessage(activeChat)">
+                        <input type="text" placeholder="Invia un messaggio"  v-model="newMessage.message" @keyup.enter="createMessage(activeChat), automaticMessage(activeChat)">
                     
                     <div>
                         <i class="fa-solid fa-microphone"></i>

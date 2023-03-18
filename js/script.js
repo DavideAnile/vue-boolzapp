@@ -169,53 +169,127 @@ const { createApp } = Vue
 
                     
                 ],
+        
+        newDate : '',
                 
-                activeChat: 0,
 
-                newMessage : 
-                            {
-                            date : '10/01/2020 15:56:00',
-                            message : '',
-                            status: 'sent'
-                            }   
+        random : '',        
+        autoAnswers : [
+
+            'Perfetto, ci penso io',
+            'Tranquillo non preoccuparti',
+            'OK!!',
+            'Vado a dormire',
+            'Ci vediamo domani!',
+            'Non disturbarmi',
+            'Lascia stare',
+            'Questa vita mi distrugge'
+
+
+                ],            
+                
+
+        activeChat: 0,
+                
+        newMessage : 
+                 {
+                    date : '',
+                     message : '',
+                    status: 'sent'
+                },
+
+                            
+        searchValue: ''           
         }
     },
 
+
+
+
+        computed: {
+
+            usersList (){
+            
+                if(this.searchValue.trim().length > 0){
+                
+                
+                return this.usersList.filter((user) => user.name.toLowerCase().includes(this.searchValue.toLowerCase().trim()))       
+                }
+                return this.contacts
+                }
+         },
+
+
+    
+    
     methods : {
-
+    
+    
         showActiveChat (chatIndex){
-
-            this.activeChat = chatIndex
-
-        },
+    
+                this.activeChat = chatIndex
+    
+            },
+        
+        
+        
+        
 
 
         createMessage (chatIndex){
 
+            
+                this.newMessage.date =  this.createNewDate().toLocaleString('it-IT')               
+
+                this.usersList[chatIndex].messages.push(this.newMessage)
+
+                
+    
+                this.newMessage = {
+                                   date : '',
+                                   message : '',
+                                   status : 'sent'
+                                   }
+                                   
+                
            
+        },
 
-             this.contacts[chatIndex].messages.push(this.newMessage)
+                              
 
-             this.newMessage = {
-                                date : '10/01/2020',
-                                message : '',
-                                status : 'sent'
-                                }
+                
+         createNewDate (){
+
+            this.newDate = new Date();
+            return this.newDate.toLocaleString('it-IT')
+         },   
+
+         
+        
+                
+                  
+
+
+        generateRandomIndex (){
+
+             random =  Math.floor(Math.random() * 8 + 1) - 1
+            return random
 
         },
 
 
         automaticMessage (chatIndex){
+            
 
             this.newMessage = setTimeout(() => {
 
                 this.newMessage = {
-                    date : '10/01/2020',
-                    message: 'OK!!!',
+                    date : this.createNewDate(),
+                    message: this.autoAnswers[this.generateRandomIndex()],
                     status: 'received'
                     }
 
-                this.contacts[chatIndex].messages.push(this.newMessage)
+                this.usersList[chatIndex].messages.push(this.newMessage)
 
                 this.newMessage = {
                     date : '10/01/2020',
@@ -225,14 +299,14 @@ const { createApp } = Vue
 
             }, 1000)
             
+        },
 
-
+    }
+            
+}).mount('#app')
+            
             
 
              
             
-        }
 
-    }
-
-  }).mount('#app')

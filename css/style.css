@@ -134,7 +134,17 @@ main{
 }
 
 
+#app .contacts #search-user-error{
+    text-decoration: underline;
+    color: blue;
+    font-size: .6em;
+    text-align: center;
+    padding: 10px;
+}
+
+
 #app .contacts .user-container{
+    position: relative;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -155,6 +165,13 @@ main{
 #app .contacts  #users{
     flex-grow: 1;
     overflow: auto;
+}
+
+
+#app .contacts  #users #chat-date{
+    position: absolute;
+    top: 5px;
+    right: 10px;
 }
 
 #app .contacts .user-container .left-user{
