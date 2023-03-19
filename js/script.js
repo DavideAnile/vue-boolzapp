@@ -170,10 +170,12 @@ const { createApp } = Vue
                     
                 ],
         
-        newDate : '',
                 
-
-        random : '',        
+ // inizializzo una proprietà per le date               
+        newDate : '',
+        
+        
+// creo array per risposte automatiche del bot       
         autoAnswers : [
 
             'Perfetto, ci penso io',
@@ -188,33 +190,42 @@ const { createApp } = Vue
 
                 ],            
                 
-
+// inizializzo porprietà per mostrare chat attiva
         activeChat: 0,
-                
+
+//inizializzo proprietà per scroll automaticato del container
+        chatContainer: null,
+
+// creo nuovo messaggio vuoto                
         newMessage : 
                  {
-                    date : '',
+                     date : '',
                      message : '',
-                    status: 'sent'
+                     status: 'sent'
                 },
 
-                            
+
+ // inizializzo proprietà per input                           
         searchValue: ''           
         }
     },
 
 
 
+// chiamo una proprietà computed per modificare dinamicamente l'array "contacts" senza l'uso di nuovo array
+    computed: {
 
-        computed: {
 
+// usersList sarà l'array da sostituire a contacts dentro l'html        
             usersList (){
             
+// se la lunghezza del valore dell'input è maggiore di 0                
                 if(this.searchValue.trim().length > 0){
                 
-                
+//° i nomi dell'array contacts viene filtrato in base alle lettere incluse in searchValue                
                 return this.usersList.filter((user) => user.name.toLowerCase().includes(this.searchValue.toLowerCase().trim()))       
                 }
+//° Altrimenti ritorna l'array con tutti i nomi                
                 return this.contacts
                 }
          },
@@ -232,37 +243,122 @@ const { createApp } = Vue
             },
         
         
-        
-        
+ // creo una funzione che genera la data in tempo reale con il formato che mi interessa usare       
+        createNewDate (){
+
+                this.newDate = new Date();
+                return this.newDate
+             }, 
+             
+             
 
 
         createMessage (chatIndex){
-
+           
             
-                this.newMessage.date =  this.createNewDate().toLocaleString('it-IT')               
+            if (this.newMessage.message == ""){
 
-                this.usersList[chatIndex].messages.push(this.newMessage)
+            } else {
+                
+// il valore della proprietà date assume il valore della funzione createNewDate               
+                this.newMessage.date =  this.createNewDate().toLocaleString('it-IT') 
+                
+// creo variabile per lasciare vuoto tasto input allA pressione del tasto "ENTER"                
+                let myMessage = this.newMessage
+    
+// pusho il messaggio nell chat indicata con l'indice                 
+                this.usersList[chatIndex].messages.push(myMessage)
 
+
+
+
+// creo una funzione con timer istantaneo in modo che la scrollbar si posizioni in basso al container delle chat appena viene appeso il nuovo messaggio
+                setTimeout(() => {
+                    this.chatContainer = this.$refs.container
+                    this.chatContainer.scrollTop = this.chatContainer.scrollHeight
+                }, 0)
+
+            }
+        },
+
+
+        
+// funzione scrolling con timeout uguale al timer della funzione "Automatic Message", in modo che la scroll sio posizioni subito in basso al container appena il bot appende il messaggio           
+        scrolling(){
+        
+                setTimeout(() => {
+        
+        
+                    this.chatContainer = this.$refs.container
+                    this.chatContainer.scrollTop = this.chatContainer.scrollHeight
+                }, 1000)
+        
+               },
                 
     
-                this.newMessage = {
-                                   date : '',
-                                   message : '',
-                                   status : 'sent'
-                                   }
-                                   
+// creo un numero random per l'indice delle risposte del bot
+        generateRandomIndex (){
+               
+                    let random =  Math.floor(Math.random() * 8 + 1) - 1
+                    return random
+               
+                       },
                 
+    
+            
+                       
+        automaticMessage (chatIndex){
+                           
+                           
+               
+                if(this.newMessage.message == ""){
+               
+                } else {
+               
+ // pusho il messaggio del bot con una timing function con timer di 1000ms                   
+                this.newMessage = setTimeout(() => {
+                   
+                    this.newMessage = {
+                            date : this.createNewDate().toLocaleString('it-IT'),
+                            message: this.autoAnswers[this.generateRandomIndex()],
+                            status: 'received'
+                                    }
+                   
+                             this.usersList[chatIndex].messages.push(this.newMessage)
+               
+                             this.newMessage = {
+                                 date : '10/01/2020',
+                                 message: '',
+                                 status: 'sent'
+                                 }
+             
+                         }, 1000)
+         
+                     }
+                     
+         
+                     
+                 },
+         
+                 
+             }, 
+               
+                                   
+}).mount('#app')
+                                    
+                   
+
+            
+                                   
+        
+
+               
            
-        },
 
                               
 
                 
-         createNewDate (){
-
-            this.newDate = new Date();
-            return this.newDate.toLocaleString('it-IT')
-         },   
+          
 
          
         
@@ -270,40 +366,11 @@ const { createApp } = Vue
                   
 
 
-        generateRandomIndex (){
 
-             random =  Math.floor(Math.random() * 8 + 1) - 1
-            return random
-
-        },
+       
 
 
-        automaticMessage (chatIndex){
             
-
-            this.newMessage = setTimeout(() => {
-
-                this.newMessage = {
-                    date : this.createNewDate(),
-                    message: this.autoAnswers[this.generateRandomIndex()],
-                    status: 'received'
-                    }
-
-                this.usersList[chatIndex].messages.push(this.newMessage)
-
-                this.newMessage = {
-                    date : '10/01/2020',
-                    message: '',
-                    status: 'sent'
-                    }
-
-            }, 1000)
-            
-        },
-
-    }
-            
-}).mount('#app')
             
             
 
