@@ -67,11 +67,13 @@
                             </div>
                             <div id="user-info">
                                 <span>{{elemento.name}}</span>
-                                <span id="last-message" style="font-size: 8px; opacity: .5;">{{elemento.messages[elemento.messages.length - 1].message}}</span>
+                                <span v-if="elemento.messages.length == 0"></span>
+                                <span v-else id="last-message" style="font-size: 8px; opacity: .5;">{{elemento.messages[elemento.messages.length - 1].message}}</span>
                             </div>
                         </div>
                         <div class="right-user">
-                            <span style="font-size: 6px; opacity: .5;" id="chat-date">{{elemento.messages[elemento.messages.length - 1].date}}</span>
+                            <span v-if="elemento.messages.length == 0"></span>
+                            <span v-else style="font-size: 6px; opacity: .5;" id="chat-date">{{elemento.messages[elemento.messages.length - 1].date}}</span>
                         </div>
     
                     </div>
@@ -91,7 +93,8 @@
                         <span v-if="usersList[activeChat] == undefined "> </span>
                         <div id="active-user-info" v-else>
                             <span>{{usersList[activeChat].name}}</span>
-                            <span  style="font-size: 8px; opacity: .5;">Ultimo Accesso : {{usersList[activeChat].messages[usersList[activeChat].messages.length - 1].date}}</span>
+                            <span v-if="usersList[activeChat].messages.length == 0"></span>
+                            <span v-else style="font-size: 8px; opacity: .5;">Ultimo Accesso : {{usersList[activeChat].messages[usersList[activeChat].messages.length - 1].date}}</span>
                         </div>
                     </div>
                     <div class="left-up-chat">
@@ -107,9 +110,22 @@
                     </div>
 
                     <div v-else v-for="(elemento,indice,) in usersList[activeChat].messages" :class="elemento.status == 'sent' ? 'sent' : 'received' " id="message-text"> 
+                        
+                        
+                        <div >{{elemento.message}}</div>
 
-                        {{elemento.message}}
                         <div id="message-time">{{elemento.date}}</div>
+
+                        <div class="dropdown">
+                            <button class="dropbtn"><i class="fa-solid fa-chevron-down"></i></button>
+                            <div class="dropdown-content">
+                              <a href="#">Message info</a>
+                              <a href="#" @click="deleteMessage(indice)">Delete message</a>
+                              
+                            </div>
+                        </div>
+
+                        
                     </div>
                 </div>
                 <div class="bottom-chat">
@@ -118,9 +134,11 @@
                     </div>
 
                         <input  type="text" placeholder="Invia un messaggio"   v-model="newMessage.message" @keyup.enter="createMessage(activeChat),automaticMessage(activeChat), scrolling() ">
-                    
-                    <div>
+                    <div v-if="newMessage.message == '' " >
                         <i class="fa-solid fa-microphone"></i>
+                    </div>
+                    <div v-else @click="createMessage(activeChat),automaticMessage(activeChat), scrolling()">
+                        <i class="fa-solid fa-paper-plane"></i>
                     </div>
                 </div>
             </div>

@@ -188,7 +188,10 @@ const { createApp } = Vue
             'Questa vita mi distrugge'
 
 
-                ],            
+                ],  
+                
+                
+          
                 
 // inizializzo porprietà per mostrare chat attiva
         activeChat: 0,
@@ -235,6 +238,11 @@ const { createApp } = Vue
     
     methods : {
     
+
+        
+
+
+            
     
         showActiveChat (chatIndex){
     
@@ -243,7 +251,7 @@ const { createApp } = Vue
             },
         
         
- // creo una funzione che genera la data in tempo reale con il formato che mi interessa usare       
+ // creo una funzione che genera la data in tempo reale       
         createNewDate (){
 
                 this.newDate = new Date();
@@ -260,7 +268,7 @@ const { createApp } = Vue
 
             } else {
                 
-// il valore della proprietà date assume il valore della funzione createNewDate               
+// il valore della proprietà date assume il valore della funzione createNewDate con formato che mi interessa utilizzare               
                 this.newMessage.date =  this.createNewDate().toLocaleString('it-IT', {
 
                     hour : '2-digit',
@@ -282,8 +290,19 @@ const { createApp } = Vue
                     this.chatContainer.scrollTop = this.chatContainer.scrollHeight
                 }, 0)
 
-            }
-        },
+                }
+            },
+
+
+
+            
+
+// creo una funzione che elimina il messaggio selezionato
+        deleteMessage(msgIndex){
+            
+            this.usersList[this.activeChat].messages.splice(msgIndex, 1 )
+             
+         },
 
 
         

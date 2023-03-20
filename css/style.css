@@ -274,7 +274,7 @@ main{
 }
 
 #app .chat .chat-area{
-    
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -290,7 +290,7 @@ main{
     display: flex;
     position: relative;
     width: 200px;
-    padding: 10px 7px 15px 7px;
+    padding: 15px 7px 15px 7px;
     border: 1px solid transparent;
     border-radius: 10px;
     margin: 0 40px;
@@ -312,7 +312,57 @@ main{
     
 }
 
- .received{
+
+#app .chat .chat-area div.dropdown{
+position: absolute;
+top: 0;
+right: 10px;
+
+}
+
+
+
+
+#app .chat .chat-area div.dropdown .dropbtn {
+    background-color: transparent;
+    color: black;
+    font-size: 7px;
+    
+    border: none;
+  }
+  
+ 
+  
+  #app .chat .chat-area div.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f1f1f1;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  #app .chat .chat-area div.dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+
+  #app .chat .chat-area div.dropdown .dropdown-content a {
+    color: black;
+    padding: 3px 5px;
+    text-decoration: none;
+    display: block;
+  }
+  
+
+
+  #app .chat .chat-area div.dropdown .dropdown-content a:hover {
+    background-color: lightgray;
+  }
+  
+  
+  .received{
     background-color: white;
     align-self: flex-start;
     font-size: 10px;
