@@ -261,7 +261,11 @@ const { createApp } = Vue
             } else {
                 
 // il valore della proprietà date assume il valore della funzione createNewDate               
-                this.newMessage.date =  this.createNewDate().toLocaleString('it-IT') 
+                this.newMessage.date =  this.createNewDate().toLocaleString('it-IT', {
+
+                    hour : '2-digit',
+                    minute : '2-digit',
+                }) 
                 
 // creo variabile per lasciare vuoto tasto input allA pressione del tasto "ENTER"                
                 let myMessage = this.newMessage
@@ -319,7 +323,10 @@ const { createApp } = Vue
                 this.newMessage = setTimeout(() => {
                    
                     this.newMessage = {
-                            date : this.createNewDate().toLocaleString('it-IT'),
+                            date : this.createNewDate().toLocaleString('it-IT', {
+                                hour : '2-digit',
+                                minute : '2-digit',
+                            }),
                             message: this.autoAnswers[this.generateRandomIndex()],
                             status: 'received'
                                     }

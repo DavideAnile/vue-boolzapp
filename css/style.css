@@ -150,6 +150,9 @@ main{
     width: 100%;
     height: 40px;
     border-bottom: 1px solid rgba(211, 211, 211, 0.4);
+    
+   
+    
 }
     
 #app .contacts .user-container:hover{
@@ -178,6 +181,8 @@ main{
     display: flex;
     align-items: center;
     gap: 5px;
+    
+    
 }
 
 #app .contacts .user-container .left-user #user-img{
@@ -195,6 +200,16 @@ main{
     display: flex;
     flex-direction: column;
     font-size: 10px;
+}
+
+
+#app .contacts .user-container .left-user #user-info #last-message{
+    width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    
 }
 
 #app .contacts .user-container .right-user{
@@ -265,7 +280,7 @@ main{
     gap: 20px;
     flex-grow: 1;
     padding: 10px 0;
-    overflow: scroll;
+    overflow-y: scroll;
     overflow-x: hidden;
     background-image: url("/img/mine.jpg")
     

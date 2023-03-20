@@ -67,7 +67,7 @@
                             </div>
                             <div id="user-info">
                                 <span>{{elemento.name}}</span>
-                                <span style="font-size: 8px; opacity: .5;">{{elemento.messages[elemento.messages.length - 1].message}}</span>
+                                <span id="last-message" style="font-size: 8px; opacity: .5;">{{elemento.messages[elemento.messages.length - 1].message}}</span>
                             </div>
                         </div>
                         <div class="right-user">
@@ -91,7 +91,7 @@
                         <span v-if="usersList[activeChat] == undefined "> </span>
                         <div id="active-user-info" v-else>
                             <span>{{usersList[activeChat].name}}</span>
-                            <span style="font-size: 8px; opacity: .5;">Ultimo Accesso : {{usersList[activeChat].messages[usersList[activeChat].messages.length - 1].date}}</span>
+                            <span  style="font-size: 8px; opacity: .5;">Ultimo Accesso : {{usersList[activeChat].messages[usersList[activeChat].messages.length - 1].date}}</span>
                         </div>
                     </div>
                     <div class="left-up-chat">
@@ -117,7 +117,7 @@
                         <i class="fa-regular fa-face-smile"></i>
                     </div>
 
-                        <input  type="text" placeholder="Invia un messaggio"   v-model="newMessage.message" @keyup.enter="createMessage(activeChat), automaticMessage(activeChat), scrolling() ">
+                        <input  type="text" placeholder="Invia un messaggio"   v-model="newMessage.message" @keyup.enter="createMessage(activeChat),automaticMessage(activeChat), scrolling() ">
                     
                     <div>
                         <i class="fa-solid fa-microphone"></i>
